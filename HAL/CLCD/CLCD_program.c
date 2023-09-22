@@ -85,7 +85,7 @@ void CLCD_voidSendCommand (u8 Copy_u8Command)
 
 void CLCD_voidSendData (u8 Copy_u8Data)
 {
-	DIO_u8SetPinValue(CLCD_CTRL_PORT,CLCD_RS_PIN,DIO_u8PIN_LOW);
+	DIO_u8SetPinValue(CLCD_CTRL_PORT,CLCD_RS_PIN,DIO_u8PIN_HIGH);
 	DIO_u8SetPinValue(CLCD_CTRL_PORT,CLCD_RW_PIN,DIO_u8PIN_LOW);
 
 	//CLCD_voidCheckCount ();

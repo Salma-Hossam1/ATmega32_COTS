@@ -5,6 +5,9 @@
 #include "EXTI_private.h"
 #include "EXTI_interface.h"
 #include "EXTI_register.h"
+#include "PORT_interface.h"
+#include "DIO_interface.h"
+#include <util/delay.h>
 
 /*Global pointer to function to hold INT0_ISR address*/
 void (*EXTI_pvINT0Func) (void) = NULL;
@@ -228,8 +231,8 @@ u8 EXTI_u8INT0SetCallBack (void (*Copy_u8pvINT0Func) (void))
 }
 
 /*ISR of INT0*/
-void __vector_0 (void) __attribute__((signal));
-void __vector_0 (void)
+void __vector_1 (void) __attribute__((signal));
+void __vector_1 (void)
 {
 	if(EXTI_pvINT0Func != NULL)
 	{
@@ -255,8 +258,8 @@ u8 EXTI_u8INT1SetCallBack (void (*Copy_u8pvINT1Func) (void))
 	return Local_u8ErrorState;
 }
 /*ISR of INT1*/
-void __vector_1 (void) __attribute__((signal));
-void __vector_1 (void)
+void __vector_2 (void) __attribute__((signal));
+void __vector_2 (void)
 {
 	if(EXTI_pvINT1Func != NULL)
 	{
@@ -283,8 +286,8 @@ u8 EXTI_u8INT2SetCallBack (void (*Copy_u8pvINT2Func) (void))
 	return Local_u8ErrorState;
 }
 /*ISR of INT2*/
-void __vector_2 (void) __attribute__((signal));
-void __vector_2 (void)
+void __vector_3 (void) __attribute__((signal));
+void __vector_3 (void)
 {
 	if(EXTI_pvINT2Func != NULL)
 	{

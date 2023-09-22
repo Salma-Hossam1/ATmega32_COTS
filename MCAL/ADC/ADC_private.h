@@ -2,7 +2,7 @@
 #define ADC_PRIVATE_H_
 
 #define AVCC                   5
-#define INTERNAL_2.56V         INTERNAL_2.56V
+#define INTERNAL               1 //-> *	INTERNAL -> VREF = 2.56v
 
 #define DIV_BY_2         0
 #define DIV_BY_4         2
@@ -15,7 +15,7 @@
 #define PRESCALER_MASK   0b11111000
 
 
-#define SINGLE_ENDED_INPUT_ADC0                                 0
+/*#define SINGLE_ENDED_INPUT_ADC0                                 0
 #define SINGLE_ENDED_INPUT_ADC1                                 1
 #define SINGLE_ENDED_INPUT_ADC2                                 2
 #define SINGLE_ENDED_INPUT_ADC3                                 3
@@ -46,7 +46,7 @@
 #define DIFFERENTIAL_INPUT_POSITIVE_ADC4_NEGATIVE_ADC2_1X       28
 #define DIFFERENTIAL_INPUT_POSITIVE_ADC5_NEGATIVE_ADC2_1X       29
 #define SINGLE_ENDED_INPUT_1.22V                                30
-#define SINGLE_ENDED_INPUT_0V                                   31
+#define SINGLE_ENDED_INPUT_0V                                   31*/
 #define CHANNEL_MASK                                            0b11100000
 
 #define AUTO_TRIGGER_MASK                                       0b00011111

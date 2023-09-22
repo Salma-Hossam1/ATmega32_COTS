@@ -4,14 +4,14 @@
 /*Reference voltage options:
  * AREF
  * AVCC
- * INTERNAL_2.56V
+ * INTERNAL ->2.56V
  * */
 #define ADC_REFERENCE_VOLTAGE  AVCC
 
-/* Enter volt for AREF if you use it-> maximum 5v*/
-#define AREF                   4
-#define AVCC                   5
-#define INTERNAL_2.56V         INTERNAL_2.56V
+/* Enter volt for AREF if you use it-> maximum 5v
+ *	INTERNAL -> VREF = 2.56
+*/
+#define AREF                   4       
 
 /*NEEDED resolution options:
  * 8
@@ -29,7 +29,7 @@
  *DIV_BY_64
  *DIV_BY_128
  * */
-#define ADC_PRESCALER              DIV_BY_2
+#define ADC_PRESCALER              DIV_BY_128
 
 
 /*CHANNEL options:
@@ -73,6 +73,7 @@
  * SINGLE_CONVERSION_MODE
  * AUTO_TRIGGER
  * */
+#define SINGLE_CONVERSION_MODE  1
 #define ADC_CONVERSION_MODE     AUTO_TRIGGER
 /*IF YOU CHOOSE AUTO_TRIGGER mode , choose the mode of auto trigger
  * OPTIONS :

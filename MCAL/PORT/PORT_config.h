@@ -7,7 +7,7 @@
 
 
 /*All pins initialized as input pins until user changes it in this file*/
-#define PORTA_PIN0_DIR     OUTPUT
+#define PORTA_PIN0_DIR     INPUT
 #define PORTA_PIN1_DIR     OUTPUT
 #define PORTA_PIN2_DIR     OUTPUT
 #define PORTA_PIN3_DIR     OUTPUT
@@ -40,11 +40,11 @@
 #define PORTD_PIN0_DIR     OUTPUT
 #define PORTD_PIN1_DIR     OUTPUT
 #define PORTD_PIN2_DIR     OUTPUT
-#define PORTD_PIN3_DIR     OUTPUT
-#define PORTD_PIN4_DIR     INPUT
-#define PORTD_PIN5_DIR     INPUT
-#define PORTD_PIN6_DIR     INPUT
-#define PORTD_PIN7_DIR     INPUT
+#define PORTD_PIN3_DIR     INPUT
+#define PORTD_PIN4_DIR     OUTPUT
+#define PORTD_PIN5_DIR     OUTPUT
+#define PORTD_PIN6_DIR     OUTPUT
+#define PORTD_PIN7_DIR     OUTPUT
 
 /*************************************************************/
 /*for input pins choose init values of PORT register */
@@ -58,7 +58,7 @@
 
 
 
-#define PORTA_PIN0_INIT_VAL     LOW
+#define PORTA_PIN0_INIT_VAL     FLOATING
 #define PORTA_PIN1_INIT_VAL     LOW
 #define PORTA_PIN2_INIT_VAL     LOW
 #define PORTA_PIN3_INIT_VAL     LOW
@@ -89,13 +89,13 @@
 
 
 
-#define PORTD_PIN0_INIT_VAL     HIGH
-#define PORTD_PIN1_INIT_VAL     HIGH
-#define PORTD_PIN2_INIT_VAL     HIGH
-#define PORTD_PIN3_INIT_VAL     HIGH
-#define PORTD_PIN4_INIT_VAL     PULLEDUP
-#define PORTD_PIN5_INIT_VAL     PULLEDUP
-#define PORTD_PIN6_INIT_VAL     PULLEDUP
-#define PORTD_PIN7_INIT_VAL     PULLEDUP
+#define PORTD_PIN0_INIT_VAL     LOW
+#define PORTD_PIN1_INIT_VAL     LOW
+#define PORTD_PIN2_INIT_VAL     LOW
+#define PORTD_PIN3_INIT_VAL     PULLEDUP
+#define PORTD_PIN4_INIT_VAL     LOW
+#define PORTD_PIN5_INIT_VAL     LOW
+#define PORTD_PIN6_INIT_VAL     LOW
+#define PORTD_PIN7_INIT_VAL     LOW
 
 #endif

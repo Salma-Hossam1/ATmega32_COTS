@@ -1,9 +1,10 @@
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
 #include "ADC_register.h"
-#include "ADC_config.h"
 #include "ADC_private.h"
+#include "ADC_config.h"
 #include "ADC_interface.h"
+
 
 static u16* ADC_pu16DigitalRead =NULL;
 static u32 *ADC_pu32mVolt = NULL;
@@ -22,7 +23,7 @@ void ADC_voidInit (void)
 	SET_BIT(ADMUX,ADMUX_REFS0);
 	CLEAR_BIT(ADMUX,ADMUX_REFS1);
 
-#elif (ADC_REFERENCE_VOLTAGE == INTERNAL_2.56V)
+#elif (ADC_REFERENCE_VOLTAGE == INTERNAL)
 	SET_BIT(ADMUX,ADMUX_REFS0);
 	SET_BIT(ADMUX,ADMUX_REFS1);
 
@@ -40,7 +41,7 @@ void ADC_voidInit (void)
 	ADCSRA |= ADC_PRESCALER;
 
 	/*Conversion Mode*/
-#if(ADC_CONVERSION_MODE == SINGLE_CONVERSION_MODE)
+#if (ADC_CONVERSION_MODE == SINGLE_CONVERSION_MODE)
 	CLEAR_BIT(ADCSRA,ADCSRA_ADATE);
 #elif (ADC_CONVERSION_MODE == AUTO_TRIGGER)
 	SET_BIT(ADCSRA,ADCSRA_ADATE);
@@ -58,11 +59,10 @@ u8 ADC_u8StartConversionSynch (u8 Copy_u8Channel,u8 Copy_u8Gain ,u16* Copy_pu16D
 {
 	u8 Local_u8ErrorState = OK;
 	u32 Local_u32Counter =0;
-	u32 *Local_pu32mVolt;
 	if(ADC_u8BusyState ==IDLE)
 	{
 		ADC_u8BusyState =Busy;
-		if((NULL_POINTER != Copy_pu32mVolt) && (NULL_POINTER != Copy_pu16DigitalRead)  )
+		if((NULL != Copy_pu32mVolt) && (NULL != Copy_pu16DigitalRead)  )
 		{
 			/*Clear the MUX bits in ADMUX register*/
 			ADMUX &= CHANNEL_MASK;
@@ -91,16 +91,17 @@ u8 ADC_u8StartConversionSynch (u8 Copy_u8Channel,u8 Copy_u8Gain ,u16* Copy_pu16D
 
 				/*Return reading*/
 #if (ADC_RESOLUTION == 8)
-				*Local_pu32mVolt = ADCH;
-				*Local_pu32mVolt =(u32)(((u32)*Local_pu32mVolt * ADC_REFERENCE_VOLTAGE *1000UL)/256UL);
-				*Local_pu32mVolt /= (u32)Copy_u8Gain;
-				*Copy_pu16DigitalRead =ADCH;
+				*Copy_pu16DigitalRead=ADCH;
+				
+				*Copy_pu32mVolt = (u32) ( ( ((u32)*Copy_pu16DigitalRead) * ((u32)(ADC_REFERENCE_VOLTAGE *1000)) )/256UL) ;
+				*Copy_pu32mVolt /= (u32)Copy_u8Gain;
 				ADC_u8BusyState =IDLE;
+				
 #elif (ADC_RESOLUTION == 10)
-				*Local_pu32mVolt = ADC;
-				*Local_pu32mVolt =(u32)(((u32)*Local_pu32mVolt * ADC_REFERENCE_VOLTAGE *1000UL)/1024UL);
-				*Local_pu32mVolt /= (u32)Copy_u8Gain;
-				*Copy_pu16DigitalRead =ADCH;
+				*Copy_pu16DigitalRead=ADC;
+				
+				*Copy_pu32mVolt = (u32)( ( ( ((u32)*Copy_pu16DigitalRead) * ((u32)(ADC_REFERENCE_VOLTAGE *1000)) )/1024UL) );
+				*Copy_pu32mVolt /= (u32)Copy_u8Gain;
 				ADC_u8BusyState =IDLE;
 #endif
 			}
@@ -121,7 +122,7 @@ u8 ADC_u8StartConversionASynch (u8 Copy_u8Channel,u8 Copy_u8Gain ,u16* Copy_pu16
 	u8 Local_u8ErrorState = OK;
 	if(ADC_u8BusyState==IDLE)
 	{
-		if((NULL_POINTER == Copy_pu32mVolt) || (NULL_POINTER == Copy_pu16DigitalRead) || (NULL_POINTER == Copy_pvNotification) )
+		if((NULL == Copy_pu32mVolt) || (NULL == Copy_pu16DigitalRead) || (NULL == Copy_pvNotification) )
 		{
 			Local_u8ErrorState = NULL_POINTER;
 		}
@@ -162,17 +163,25 @@ void __vector_16 (void)
 	/*Read ADC result*/
 	if(ADC_RESOLUTION == 8)
 	{
-		*ADC_pu32mVolt = ADCH;
+		/*ADC_pu32mVolt = ADCH;
 		*ADC_pu32mVolt =(u32)(((u32)*ADC_pu32mVolt * ADC_REFERENCE_VOLTAGE *1000UL)/256UL);
 		*ADC_pu32mVolt /= (u32)ADC_pu8Gain;
+		*ADC_pu16DigitalRead=ADCH;*/
 		*ADC_pu16DigitalRead=ADCH;
+		
+		*ADC_pu32mVolt = (u32)( ( ( ((u32)*ADC_pu16DigitalRead) * ((u32)(ADC_REFERENCE_VOLTAGE *1000)) )/256UL) );
+		*ADC_pu32mVolt /= (u32)ADC_pu8Gain;
 	}
 	else if(ADC_RESOLUTION == 10)
 	{
-		*ADC_pu32mVolt = ADC;
+		/**ADC_pu32mVolt = ADC;
 		*ADC_pu32mVolt =(u32)(((u32)*ADC_pu32mVolt * ADC_REFERENCE_VOLTAGE *1000UL)/1024UL);
 		*ADC_pu32mVolt /= (u32)ADC_pu8Gain;
+		*ADC_pu16DigitalRead=ADC;*/
 		*ADC_pu16DigitalRead=ADC;
+		
+		*ADC_pu32mVolt = (u32)( ( ( ((u32)*ADC_pu16DigitalRead) * ((u32)(ADC_REFERENCE_VOLTAGE *1000)) )/1024UL) );
+		*ADC_pu32mVolt /= (u32)ADC_pu8Gain;
 	}
 
 	/*Make ADC state IDLE*/

@@ -30,7 +30,7 @@ typedef enum{
 }Bool_t;
 
 #define OK   1
-#define NOK  2
+#define NOK  0
 #define NULL_POINTER  3
 #define BUSY_FUNC     4
 
